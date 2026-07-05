@@ -1,0 +1,500 @@
+* {
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(160deg, #1f3336, #0f1f21);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    color: #fff;
+}
+.hidden{
+    display: none !important;
+}
+#confetti-canvas{
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 30;
+}
+
+/* ===================== NAVBAR ===================== */
+#navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: #16292b;
+    box-shadow: 0 2px 10px #0006;
+    z-index: 10;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.nav-left, .nav-right{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-links{
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.nav-link{
+    background: transparent;
+    border: none;
+    color: #cde;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: .2s;
+}
+.nav-link:hover, .nav-link.active{
+    background: #78BEC5;
+    color: #0f1f21;
+}
+.icon-btn{
+    background: #22383b;
+    border: none;
+    color: #fff;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+}
+.icon-btn:hover{
+    background: #34565a;
+}
+.icon-btn:disabled{
+    opacity: .35;
+    cursor: not-allowed;
+}
+.ghost-btn{
+    background: transparent;
+    border: 1px solid #DB695A;
+    color: #DB695A;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+}
+.ghost-btn:hover{
+    background: #DB695A;
+    color: #fff;
+}
+#nav-user{
+    font-weight: bold;
+    color: #ECAF4E;
+}
+
+/* ===================== SHARED CARD ===================== */
+.page{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 90px 20px 20px;
+}
+.card{
+    background: #16292b;
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px #0007;
+    text-align: center;
+    min-width: 320px;
+}
+.primary-btn{
+    background: #78BEC5;
+    border: none;
+    color: #0f1f21;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .2s;
+}
+.primary-btn:hover{
+    background: #93d3da;
+}
+.secondary-btn{
+    background: #ECAF4E;
+    border: none;
+    color: #4a3200;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: .2s;
+}
+.secondary-btn:hover{
+    background: #f4c476;
+}
+
+/* ===================== LOGIN PAGE ===================== */
+.login-card h1{
+    font-family: cursive;
+    margin: 0 0 4px;
+    color: #78BEC5;
+}
+.subtitle{
+    color: #9fb3b5;
+    margin: 0 0 24px;
+}
+#login-form{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+input[type="text"]{
+    padding: 12px 16px;
+    border-radius: 24px;
+    border: 2px solid #2f4a4d;
+    background: #0f1f21;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    outline: none;
+    width: 100%;
+}
+input[type="text"]:focus{
+    border-color: #78BEC5;
+}
+input[type="text"]:disabled{
+    opacity: .6;
+}
+.known-users{
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+.known-user-chip{
+    background: #22383b;
+    border: none;
+    color: #cde;
+    padding: 6px 14px;
+    border-radius: 16px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: .2s;
+}
+.known-user-chip:hover{
+    background: #78BEC5;
+    color: #0f1f21;
+}
+
+/* ===================== MODE PICKER / SETUP ===================== */
+.mode-buttons{
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+#local-setup, #online-setup{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 340px;
+}
+#local-setup label{
+    text-align: left;
+    font-size: 13px;
+    color: #9fb3b5;
+    margin-bottom: -6px;
+}
+.online-choice{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.or-divider{
+    color: #9fb3b5;
+    font-size: 13px;
+}
+#room-code-display{
+    font-size: 42px;
+    font-weight: bold;
+    letter-spacing: 8px;
+    color: #ECAF4E;
+    margin: 10px 0;
+}
+.muted{
+    color: #9fb3b5;
+    font-size: 14px;
+}
+.error-msg{
+    color: #DB695A;
+    font-weight: bold;
+}
+
+/* ===================== GAME PAGE ===================== */
+.game-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.players-bar{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-weight: bold;
+}
+.player-chip{
+    padding: 6px 16px;
+    border-radius: 20px;
+    background: #22383b;
+}
+.o-chip{ color: #ECAF4E; }
+.x-chip{ color: #DB695A; }
+.vs{ color: #9fb3b5; font-size: 13px; }
+.status-bar{
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+#current-player{
+    color: #ECAF4E;
+}
+.timer{
+    background: #16292b;
+    padding: 6px 16px;
+    border-radius: 20px;
+}
+#tic-tac-toe{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+}
+#tic-tac-toe li{
+    background-color: #78BEC5;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: cursive;
+    line-height: 0;
+    font-size: 80px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 5px 5px 5px #5555;
+    transition: .5s;
+}
+#tic-tac-toe li::after{
+    content: attr(data-value);
+}
+#tic-tac-toe li[data-value="X"]{
+    background-color: #DB695A!important;
+}
+#tic-tac-toe li[data-value="O"]{
+    background-color: #ECAF4E!important;
+}
+#tic-tac-toe li:hover{
+    background-color: #426c70;
+}
+#tic-tac-toe.disabled li{
+    pointer-events: none;
+    opacity: .8;
+}
+.controls{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ===================== LEADERBOARD PAGE ===================== */
+.leaderboard-card{
+    min-width: 460px;
+}
+.leaderboard-card h2{
+    margin-top: 0;
+    color: #78BEC5;
+}
+#leaderboard-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+#leaderboard-table th, #leaderboard-table td{
+    padding: 10px 12px;
+    text-align: center;
+    border-bottom: 1px solid #22383b;
+}
+#leaderboard-table th{
+    color: #9fb3b5;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+#leaderboard-table tr.me{
+    background: #22383b;
+}
+#leaderboard-table tr.rank-1 td:first-child{
+    color: #ECAF4E;
+    font-weight: bold;
+}
+
+/* ===================== CALENDAR PAGE ===================== */
+.calendar-card{
+    min-width: 480px;
+    text-align: left;
+}
+.calendar-card h2, .calendar-card h3{
+    color: #78BEC5;
+    text-align: center;
+}
+.calendar-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+#cal-month-label{
+    font-weight: bold;
+    font-size: 16px;
+}
+.calendar-grid{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 20px;
+}
+.cal-dow{
+    text-align: center;
+    font-size: 11px;
+    color: #9fb3b5;
+    padding: 4px 0;
+}
+.cal-day{
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #0f1f21;
+    font-size: 13px;
+    cursor: default;
+    position: relative;
+}
+.cal-day.empty{
+    background: transparent;
+}
+.cal-day.has-games{
+    background: #22383b;
+    cursor: pointer;
+    font-weight: bold;
+}
+.cal-day.has-games:hover{
+    background: #34565a;
+}
+.cal-day.selected{
+    outline: 2px solid #78BEC5;
+}
+.cal-dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ECAF4E;
+    margin-top: 2px;
+}
+.history-list{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+.history-item{
+    background: #0f1f21;
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+}
+.history-item .hi-players{
+    font-weight: bold;
+}
+.history-item .hi-meta{
+    color: #9fb3b5;
+    font-size: 12px;
+}
+.history-item .hi-result{
+    color: #ECAF4E;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* ===================== ALERT ===================== */
+#alert{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    background-color:  #0009;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: monospace;
+    font-size: xx-large;
+    font-weight: bold;
+    display: none;
+    z-index: 20;
+}
+#alert .content{
+    background: #16292b;
+    padding: 40px 50px;
+    border-radius: 16px;
+}
+#alert .sub-message{
+    font-size: 15px;
+    color: #9fb3b5;
+    margin-top: 10px;
+}
+#alert button{
+    border: none;
+    padding: 10px 26px;
+    border-radius: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+#alert-restart{
+    background-color: #ECAF4E;
+}
+#alert-close{
+    background: transparent;
+    border: 1px solid #DB695A;
+    color: #DB695A;
+}

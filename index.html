@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <header id="navbar" class="hidden">
+        <div class="nav-left">
+            <button id="nav-back" class="icon-btn" title="Back">&#8592;</button>
+            <button id="nav-forward" class="icon-btn" title="Forward">&#8594;</button>
+        </div>
+        <nav class="nav-links">
+            <button class="nav-link" data-page="game">Play</button>
+            <button class="nav-link" data-page="leaderboard">Leaderboard</button>
+            <button class="nav-link" data-page="calendar">Calendar</button>
+        </nav>
+        <div class="nav-right">
+            <span id="nav-user"></span>
+            <button id="logout-btn" class="ghost-btn">Logout</button>
+        </div>
+    </header>
+
+    <!-- ===================== LOGIN PAGE ===================== -->
+    <section id="login-page" class="page">
+        <div class="card login-card">
+            <h1>Tic&nbsp;Tac&nbsp;Toe</h1>
+            <p class="subtitle">Sign in to track your scores</p>
+            <form id="login-form">
+                <input type="text" id="username-input" placeholder="Enter your name" maxlength="16" autocomplete="off" required>
+                <button type="submit" class="primary-btn">Login</button>
+            </form>
+            <div id="known-users" class="known-users"></div>
+        </div>
+    </section>
+
+    <!-- ===================== GAME PAGE ===================== -->
+    <section id="game-page" class="page hidden">
+
+        <!-- Mode picker -->
+        <div id="mode-picker" class="card">
+            <h2>How do you want to play?</h2>
+            <div class="mode-buttons">
+                <button id="pick-local" class="primary-btn">Same Device</button>
+                <button id="pick-online" class="secondary-btn">Play Online (2 devices)</button>
+            </div>
+        </div>
+
+        <!-- Local setup -->
+        <div id="local-setup" class="card hidden">
+            <h2>Same-Device Match</h2>
+            <label>Player O</label>
+            <input type="text" id="local-player-o" disabled>
+            <label>Player X</label>
+            <input type="text" id="local-player-x" placeholder="Player 2 name" maxlength="16">
+            <button id="local-start-btn" class="primary-btn">Start Match</button>
+            <button class="ghost-btn back-to-picker">&#8592; Change mode</button>
+        </div>
+
+        <!-- Online setup -->
+        <div id="online-setup" class="card hidden">
+            <h2>Play Online</h2>
+            <div class="online-choice">
+                <button id="create-room-btn" class="primary-btn">Create Room</button>
+                <div class="or-divider">or</div>
+                <input type="text" id="join-code-input" placeholder="Enter room code" maxlength="4">
+                <button id="join-room-btn" class="secondary-btn">Join Room</button>
+            </div>
+            <div id="room-waiting" class="hidden">
+                <p>Share this code with your opponent:</p>
+                <div id="room-code-display"></div>
+                <p class="muted">Waiting for opponent to join&hellip;</p>
+            </div>
+            <div id="room-error" class="error-msg hidden"></div>
+            <button class="ghost-btn back-to-picker">&#8592; Change mode</button>
+        </div>
+
+        <!-- Active game area -->
+        <div id="game-area" class="game-wrap hidden">
+            <div class="players-bar">
+                <span id="label-o" class="player-chip o-chip">O</span>
+                <span class="vs">vs</span>
+                <span id="label-x" class="player-chip x-chip">X</span>
+            </div>
+            <div class="status-bar">
+                <div class="turn-indicator">Turn: <span id="current-player">O</span></div>
+                <div class="timer">&#9201; <span id="timer">00:00</span></div>
+            </div>
+
+            <ul id="tic-tac-toe">
+                <li></li><li></li><li></li>
+                <li></li><li></li><li></li>
+                <li></li><li></li><li></li>
+            </ul>
+
+            <div class="controls">
+                <button id="restart" class="secondary-btn">Restart</button>
+                <button id="undo" class="icon-btn" title="Undo move">&#8630; Undo</button>
+                <button id="redo" class="icon-btn" title="Redo move">&#8631; Redo</button>
+                <button id="leave-game" class="ghost-btn">Leave match</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== LEADERBOARD PAGE ===================== -->
+    <section id="leaderboard-page" class="page hidden">
+        <div class="card leaderboard-card">
+            <h2>Leaderboard</h2>
+            <table id="leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th><th>Player</th><th>Wins</th><th>Draws</th>
+                        <th>Losses</th><th>Games</th><th>Best Time</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+            </table>
+            <p id="leaderboard-empty" class="hidden">No games played yet. Go play a round!</p>
+        </div>
+    </section>
+
+    <!-- ===================== CALENDAR PAGE ===================== -->
+    <section id="calendar-page" class="page hidden">
+        <div class="card calendar-card">
+            <h2>Game Calendar</h2>
+            <div class="calendar-nav">
+                <button id="cal-prev" class="icon-btn">&#8592;</button>
+                <span id="cal-month-label"></span>
+                <button id="cal-next" class="icon-btn">&#8594;</button>
+            </div>
+            <div id="calendar-grid" class="calendar-grid"></div>
+
+            <h3 id="history-title">Recent Games</h3>
+            <div id="history-list" class="history-list"></div>
+            <p id="history-empty" class="hidden">No games recorded yet.</p>
+        </div>
+    </section>
+
+    <!-- ===================== WIN / DRAW ALERT ===================== -->
+    <div id="alert">
+        <div class="content">
+            <div class="message"></div>
+            <div class="sub-message"></div>
+            <button id="alert-restart">Play Again</button>
+            <button id="alert-close" class="ghost-btn">Close</button>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
